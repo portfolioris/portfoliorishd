@@ -1,0 +1,36 @@
+@font-face {
+  font-family: TypeWriter;
+  src: url("../fonts/typewriter.woff2") format("woff2"), url("../fonts/typewriter.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+body {
+  font-family: TypeWriter, monospace; }
+
+.c-canvas {
+  position: absolute;
+  top: 0;
+  left: calc(50vw - 88.88889vh);
+  width: 177.77778vh;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box; }
+  @media (max-aspect-ratio: 16 / 9) {
+    .c-canvas {
+      top: calc(50vh - 28.125vw);
+      left: 0;
+      width: 100vw;
+      height: 56.25vw; } }
+
+.c-canvas__canvas {
+  width: 100%; }
+
+.u-visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }

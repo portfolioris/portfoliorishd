@@ -1,0 +1,48 @@
+@font-face {
+  font-family: TypeWriter;
+  src:
+    url("../fonts/typewriter.woff2") format("woff2"),
+    url("../fonts/typewriter.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin proportional-box($a: 1, $b: $a) {
+  position: absolute;
+  top: 0;
+  left: calc(50vw - #{$a / $b / 2 * 100vh});
+  width: $a/$b*100vh;
+  height: 100vh;
+
+  @media (max-aspect-ratio: #{$a}/#{$b}) {
+    top: calc(50vh - #{$b / $a / 2 * 100vw});
+    left: 0;
+    width: 100vw;
+    height: $b/$a*100vw;
+  }
+}
+
+body {
+  font-family: TypeWriter, monospace;
+}
+
+.c-canvas {
+  @include proportional-box(16, 9);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.c-canvas__canvas {
+  width: 100%;
+}
+
+.u-visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}

@@ -6,6 +6,7 @@ import 'pixi-display';
 
 import './Canvas.css';
 import imageFile from './../images/DSCN4125.jpg';
+import videoFile from './../images/testVideo.mp4';
 
 class Canvas extends Component {
   componentDidMount() {
@@ -109,11 +110,28 @@ class Canvas extends Component {
       tl.to(message2, 0, { pixi: { skewX: 50, x: 600 } }, '+=0.04');
       tl.to(message2, 0, { pixi: { skewX: 0, x: 1320, y: 640 } }, '+=0.04');
 
+
+      const videoTexture = PIXI.VideoBaseTexture.fromUrl(videoFile);
+      videoTexture.autoPlay = false;
+      const texture = new PIXI.Texture(videoTexture);
+      const source = videoTexture.source;
+      const videoSprite = new PIXI.Sprite(texture);
+      videoSprite.alpha = 0;
+      app.stage.addChild(videoSprite);
+
       tl.to(flash, 0.2, {
         alpha: 1,
-        onComplete: () => app.stage.removeChild(message2),
+        onComplete: function () {
+          app.stage.removeChild(message2);
+        }
       });
-      tl.to(imageRoom1, 0, { pixi: { alpha: 1, x: 0, y: 0 } });
+      tl.to(videoSprite, 0, {
+        pixi: {
+          alpha: 1, onComplete: function () {
+            source.play();
+          }
+        }
+      });
       tl.to(flash, 0.08, { alpha: 0 });
 
 
@@ -127,6 +145,7 @@ class Canvas extends Component {
 
     const loader = PIXI.loader;
     loader.add('imageRoom1', imageFile);
+    // loader.add('video1', videoFile);
     loader.load(onAssetsLoaded);
   }
 

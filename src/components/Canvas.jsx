@@ -5,8 +5,8 @@ import 'gsap/PixiPlugin';
 import 'pixi-display';
 
 import './Canvas.css';
-import imageFile from './../images/DSCN4125.jpg';
-import videoFile from './../images/testVideo.mp4';
+import imageFile from './../images/intro_1.jpg';
+import videoFile from './../images/intro_seq_1.mp4';
 
 class Canvas extends Component {
   componentDidMount() {
@@ -81,9 +81,10 @@ class Canvas extends Component {
         alpha: 1,
         onComplete: () => app.stage.removeChild(message1),
       });
-      tl.to(imageRoom1, 0, { pixi: { alpha: 1, x: -1920 * 2, y: 540 } });
+
+      tl.to(imageRoom1, 0, { pixi: { alpha: 1, x: -1920, y: 0 } });
       tl.to(flash, 0.08, { alpha: 0 });
-      tl.to(imageRoom1, 2, { pixi: { x: -1920, y: 0 }, ease: Power1.easeOut });
+      tl.to(imageRoom1, 2, { pixi: { x: -1160, y: -200 }, ease: Power1.easeOut });
 
 
       tl.to(doorShapePoints, 2, {
@@ -92,7 +93,7 @@ class Canvas extends Component {
         onUpdateParams: [doorShape, doorShapePoints],
       }, "-=2");
 
-      tl.to(imageRoom1, 3, { pixi: { x: 0 }, ease: Power1.easeInOut });
+      tl.to(imageRoom1, 3, { pixi: { x: 0, y: -1080 }, ease: Power1.easeInOut });
       tl.to(doorShapePoints, 3, {
         ...[125, 1080, -167, 270, 1632, -369, 2205, 1080],
         onUpdate: moveAndLineTo,
@@ -134,7 +135,6 @@ class Canvas extends Component {
       });
       tl.to(flash, 0.08, { alpha: 0 });
 
-
     }
 
     const app = new PIXI.Application(1920, 1080, {
@@ -145,7 +145,7 @@ class Canvas extends Component {
 
     const loader = PIXI.loader;
     loader.add('imageRoom1', imageFile);
-    // loader.add('video1', videoFile);
+    loader.add('video1', videoFile);
     loader.load(onAssetsLoaded);
   }
 

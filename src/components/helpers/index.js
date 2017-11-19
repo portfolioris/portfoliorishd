@@ -1,11 +1,11 @@
 import * as PIXI from 'pixi.js';
 
-const textMessage = (text) => {
+const textMessage = (text, size = 64) => {
   const message = new PIXI.Text(
     text,
     {
       fontFamily: 'TypeWriter',
-      fontSize: 64,
+      fontSize: size,
       fill: 'white',
     },
   );

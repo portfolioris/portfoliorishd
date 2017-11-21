@@ -10,10 +10,8 @@ const textMessage = (text, size = 64) => {
     },
   );
 
-  message.anchor.x = 0.5;
-  message.anchor.y = 0.5;
-  message.x = 1320;
-  message.y = 540;
+  message.anchor.set(0.5, 0,5);
+  message.position.set(1320, 540);
   message.alpha = 0;
   return message;
 };

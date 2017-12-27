@@ -31,51 +31,15 @@ class Canvas extends Component {
       const introSequence = new PIXI.Container();
       app.stage.addChild(introSequence);
 
-      /* === SETUP IMAGES === */
-      const imageIntro1 = new PIXI.Sprite(resources.imageIntro1.texture);
-      imageIntro1.alpha = 0;
-      introSequence.addChild(imageIntro1);
-
-      const imageIntro2 = new PIXI.Sprite(resources.imageIntro2.texture);
-      imageIntro2.alpha = 0;
-      introSequence.addChild(imageIntro2);
-
-      const imageHiddenMe1 = new PIXI.Sprite(resources.imageHiddenMe1.texture);
-      imageHiddenMe1.alpha = 0;
-      imageHiddenMe1.anchor.y = 1;
-      imageHiddenMe1.y = 1080;
-      introSequence.addChild(imageHiddenMe1);
-
-      /* === SETUP TEXT MESSAGES === */
-      const message1 = textMessage('I want to show you my room');
-      introSequence.addChild(message1);
-
-      const message2 = textMessage('I will tell you about my room');
-      introSequence.addChild(message2);
-      const message3 = textMessage('I\'ll pretend I\'m not here');
-      introSequence.addChild(message3);
-
       /* === SETUP WHITE FLASH === */
       const flash = placeFlash();
       flash.displayGroup = topLayer;
       introSequence.addChild(flash);
 
-      /* === SETUP DOOR SHAPE === */
-      const doorShape = new PIXI.Graphics();
-      introSequence.addChild(doorShape);
-      imageIntro1.mask = doorShape;
-
-      const doorShapePoints = [188, 1080, 0, 616, 170, 889, 246, 1080, 188, 1080];
-      moveAndLineTo(doorShape, doorShapePoints);
-
-      /* === SETUP VIDEOS === */
-      const video1 = placeVideo(videoIntro1);
-      introSequence.addChild(video1.sprite);
-
-      const video2 = placeVideo(videoIntro1); // todo: 2
-      introSequence.addChild(video2.sprite);
-
       const tl_message1 = () => {
+        const message1 = textMessage('I want to show you my room');
+        introSequence.addChild(message1);
+
         return new TimelineMax()
           .to(message1, 0.01, { alpha: 1 })
           .from(message1, 2, { pixi: { scale: 0.9 }, ease: Linear.easeNone })
@@ -84,47 +48,78 @@ class Canvas extends Component {
       };
 
       const tl_imageRoom1 = () => {
+        const enterToViewTv = new PIXI.Container();
+        enterToViewTv.alpha = 0;
+        app.stage.addChild(enterToViewTv);
+        const imageIntro1 = new PIXI.Sprite(resources.imageIntro1.texture);
+        enterToViewTv.addChild(imageIntro1);
+        const tvScreenMask = new PIXI.Sprite(resources.intro_1_screenmask.texture);
+        enterToViewTv.addChild(tvScreenMask);
+        imageIntro1.mask = tvScreenMask;
+        introSequence.addChild(enterToViewTv);
+
+        /* === SETUP DOOR SHAPE === */
+        const doorShape = new PIXI.Graphics();
+        introSequence.addChild(doorShape);
+        enterToViewTv.mask = doorShape;
+        const doorShapePoints = [188, 1080, 0, 616, 170, 889, 246, 1080, 188, 1080];
+        moveAndLineTo(doorShape, doorShapePoints);
+
         return new TimelineMax()
-          .to(imageIntro1, 0.01, { alpha: 1, x: -1920, y: 0 })
-          .to(flash, 0.1, { alpha: 0 })
-          .to(imageIntro1, 2, { x: -1160, y: -200, ease: Power1.easeOut }, '-=0.1')
+          .to(enterToViewTv, 0.01, { alpha: 1, x: -1920, y: 0 })
+          .to(flash, 0.5, { alpha: 0 })
+          .to(enterToViewTv, 2, { x: -1160, y: -200, ease: Power1.easeOut }, '-=0.5')
           .to(doorShapePoints, 2, {
             ...[886, 1080, 515, 163, 960, 237, 1322, 1080, 886, 1080],
             onUpdate: moveAndLineTo,
             onUpdateParams: [doorShape, doorShapePoints],
           }, "-=2")
-          .to(imageIntro1, 3, { x: 0, y: -1080, ease: Power1.easeInOut })
+          .to(enterToViewTv, 3, { x: 0, y: -1080, ease: Power1.easeInOut })
           .to(doorShapePoints, 3, {
             ...[125, 1080, -167, 270, 1632, -369, 2205, 1080],
             onUpdate: moveAndLineTo,
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-          .to(imageIntro1, 0, { alpha: 0 });
+          .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
+        const message2 = textMessage('I will tell you about my room');
+        introSequence.addChild(message2);
+
         return new TimelineMax()
           .to(message2, 0.01, { alpha: 1 })
-          .from(message2, 2, { pixi: { scale: 0.9 }, ease: Linear.easeNone });
+          .from(message2, 2, { pixi: { scale: 0.9 }, ease: Linear.easeNone })
+          .to(flash, 0.2, { alpha: 1 })
+          .to(message2, 0, { alpha: 0 })
       };
 
       const tl_video1 = () => {
+        const video1 = placeVideo(videoIntro1);
+        introSequence.addChild(video1.sprite);
+
         const tl = new TimelineMax();
         video1.source.addEventListener('pause', () => {
           introSequence.removeChild(video1.sprite);
           tl.resume();
         });
         return tl
-          .to(flash, 0.2, { alpha: 1 })
-          .to(message2, 0, { alpha: 0 })
-          .to(video1.sprite, 0, { alpha: 1 })
+          .to(video1.sprite, 0.01, { alpha: 1 })
           .to(flash, 0.08, { alpha: 0 })
           .addPause('+=0', video1.source.play, null, video1.source)
           .to(flash, 2, { alpha: 0 });
       };
 
       const tl_message3 = () => {
+        const imageHiddenMe1 = new PIXI.Sprite(resources.imageHiddenMe1.texture);
+        imageHiddenMe1.alpha = 0;
+        imageHiddenMe1.anchor.y = 1;
+        imageHiddenMe1.y = 1080;
+        introSequence.addChild(imageHiddenMe1);
+        const message3 = textMessage('I\'ll pretend I\'m not here');
+        introSequence.addChild(message3);
+
         return new TimelineMax()
           .to(message3, 0.01, { alpha: 1 })
           .from(message3, 2, { pixi: { scale: 0.9 }, ease: Linear.easeNone })
@@ -134,26 +129,29 @@ class Canvas extends Component {
           .to(message3, 0, { alpha: 0 });
       };
 
-      const path = [
-        { x: 162, y: 1080 },
-        { x: 56, y: 883 },
-        { x: 4, y: 688 },
-        { x: 5, y: 496 },
-        { x: 5, y: 207 },
-        { x: 185, y: -5 },
-        { x: 550, y: 5 },
-        { x: 915, y: 16 },
-        { x: 1007, y: 86 },
-        { x: 1378, y: 46 },
-        { x: 1750, y: 5 },
-        { x: 1857, y: 157 },
-        { x: 1908, y: 521 },
-        { x: 1924, y: 635 },
-        { x: 1796, y: 822 },
-        { x: 1523, y: 1080 },
-      ];
-
       const tl_image2 = () => {
+        const imageIntro2 = new PIXI.Sprite(resources.imageIntro2.texture);
+        imageIntro2.alpha = 0;
+        introSequence.addChild(imageIntro2);
+
+        const path = [
+          { x: 162, y: 1080 },
+          { x: 56, y: 883 },
+          { x: 4, y: 688 },
+          { x: 5, y: 496 },
+          { x: 5, y: 207 },
+          { x: 185, y: -5 },
+          { x: 550, y: 5 },
+          { x: 915, y: 16 },
+          { x: 1007, y: 86 },
+          { x: 1378, y: 46 },
+          { x: 1750, y: 5 },
+          { x: 1857, y: 157 },
+          { x: 1908, y: 521 },
+          { x: 1924, y: 635 },
+          { x: 1796, y: 822 },
+          { x: 1523, y: 1080 },
+        ];
         imageIntro2.anchor.x = 0.5;
         imageIntro2.anchor.y = 0.5;
         return new TimelineMax()
@@ -164,6 +162,8 @@ class Canvas extends Component {
       };
 
       const tl_title = () => {
+        const video2 = placeVideo(videoIntro1); // todo: 2
+        introSequence.addChild(video2.sprite);
         const titleGroup = new PIXI.Container();
         const title = textMessage('Portfolioris.nl', 128);
         const subTitle = textMessage('The portfolio of Joris Hulsbosch');
@@ -192,60 +192,13 @@ class Canvas extends Component {
       };
 
       new TimelineMax()
-      // .add(tl_message1())
+      .add(tl_message1())
       .add(tl_imageRoom1())
-      // .add(tl_message2())
-      // .add(tl_video1())
-      // .add(tl_message3())
-      //   .add(tl_image2())
-      //   .add(tl_title());
-
-      const mask = new PIXI.Sprite(resources.intro_1_screenmask.texture);
-      mask.y = -1080;
-      imageIntro1.mask = mask;
-      introSequence.addChild(mask);
-
-      const graphics = new PIXI.Graphics();
-      // console.log(MorphSVGPlugin.pathDataToBezier('#svg'));
-
-      const path2 = [
-        { x: 787, y: 1785 },
-        { x: 718, y: 1823 },
-        { x: 681, y: 1847 },
-        { x: 654, y: 1838 },
-        { x: 647, y: 1836 },
-        { x: 639, y: 1832 },
-        { x: 627, y: 1806 },
-        { x: 618, y: 1778 },
-        { x: 584, y: 1702 },
-        { x: 578, y: 1682 },
-        { x: 575, y: 1669 },
-        { x: 580, y: 1653 },
-        { x: 584, y: 1649 },
-        { x: 607, y: 1630 },
-        { x: 779, y: 1536 },
-        { x: 813, y: 1541 },
-        { x: 846, y: 1547 },
-        { x: 895, y: 1693 },
-        { x: 886, y: 1711 },
-        { x: 876, y: 1729 },
-        { x: 856, y: 1747 },
-        { x: 787, y: 1785 },
-      ];
-
-
-      // SVGGraphics.drawSVG(graphics, svg);
-      // SVGGraphics.drawSVG(graphics, resources.intro_1_screenmask.texture);
-
-      // imageIntro2.mask = mask;
-
-      // console.log(MorphSVGPlugin.pathDataToBezier(intro_1_screenmask));
-
-      // const graphics = new PIXI.Graphics();
-      // SVGGraphics.drawSVG(graphics, resources.intro_1_screenmask);
-      introSequence.addChild(graphics);
-      graphics.y = -1080;
-      // graphics.x = 1000;
+      .add(tl_message2())
+      .add(tl_video1())
+      .add(tl_message3())
+        .add(tl_image2())
+        .add(tl_title());
     };
 
 

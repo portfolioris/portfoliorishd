@@ -47,9 +47,34 @@ const placeVideo = (videoFile) => {
   };
 };
 
+const generateStatic = () => {
+  const c = document.createElement('canvas'),
+    w = 360,
+    h = 288;
+  c.width = w;
+  c.height = h;
+  const $ = c.getContext('2d');
+  const id = $.createImageData(w, h);
+
+  let r;
+  for (let p = 4 * (w * h - 1); p >= 0; p -= 4) {
+    r = Math.random();
+    id.data[p] = id.data[p + 1] = id.data[p + 2] = 255 * Math.pow(r, 0.6);
+    id.data[p + 3] = 255;
+  }
+  $.putImageData(id, 0, 0);
+
+  const canvasTexture = PIXI.Texture.fromCanvas(c);
+  const sprite = new PIXI.Sprite(canvasTexture);
+  sprite.width = 720;
+  sprite.height = 576;
+  return sprite;
+};
+
 export {
   textMessage,
   moveAndLineTo,
   placeFlash,
   placeVideo,
+  generateStatic,
 };

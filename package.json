@@ -6,6 +6,7 @@
     "gsap": "^1.20.2",
     "node-sass-chokidar": "^0.0.3",
     "pixi-display": "^1.1.1",
+    "pixi-svg-graphics": "^0.0.2",
     "pixi.js": "^4.5.6",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

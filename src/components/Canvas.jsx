@@ -55,8 +55,14 @@ class Canvas extends Component {
         enterToViewTv.addChild(imageIntro1);
         const tvScreenMask = new PIXI.Sprite(resources.intro_1_screenmask.texture);
         enterToViewTv.addChild(tvScreenMask);
-        imageIntro1.mask = tvScreenMask;
+        // imageIntro1.mask = tvScreenMask;
         introSequence.addChild(enterToViewTv);
+
+        const staticNoise = generateStatic();
+        staticNoise.x = 576;
+        staticNoise.y = 1541;
+        enterToViewTv.addChild(staticNoise);
+        staticNoise.mask = tvScreenMask;
 
         /* === SETUP DOOR SHAPE === */
         const doorShape = new PIXI.Graphics();
@@ -192,13 +198,13 @@ class Canvas extends Component {
       };
 
       new TimelineMax()
-      .add(tl_message1())
+      // .add(tl_message1())
       .add(tl_imageRoom1())
-      .add(tl_message2())
-      .add(tl_video1())
-      .add(tl_message3())
-        .add(tl_image2())
-        .add(tl_title());
+      // .add(tl_message2())
+      // .add(tl_video1())
+      // .add(tl_message3())
+      //   .add(tl_image2())
+      //   .add(tl_title());
     };
 
 

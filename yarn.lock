@@ -4877,7 +4877,7 @@ pixi-display@^1.1.1:
   dependencies:
     "@types/pixi.js" "^4.3.1"
 
-pixi-gl-core@^1.0.3:
+pixi-gl-core@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/pixi-gl-core/-/pixi-gl-core-1.1.4.tgz#8b4b5c433b31e419bc379dc565ce1b835a91b372"
 
@@ -4899,16 +4899,16 @@ pixi.js@^3.0.6:
     object-assign "^4.0.1"
     resource-loader "^1.6.4"
 
-pixi.js@^4.5.6:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/pixi.js/-/pixi.js-4.6.1.tgz#8a231f70e529c73bb4c75fbf684b425d7f153a8e"
+pixi.js@^4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/pixi.js/-/pixi.js-4.6.2.tgz#f13c87b567ca4c8ada3c1a9a0bd3639417b9ecf7"
   dependencies:
     bit-twiddle "^1.0.2"
     earcut "^2.0.7"
     eventemitter3 "^2.0.0"
     ismobilejs "^0.4.0"
     object-assign "^4.0.1"
-    pixi-gl-core "^1.0.3"
+    pixi-gl-core "^1.1.4"
     remove-array-items "^1.0.0"
     resource-loader "^2.0.9"
 

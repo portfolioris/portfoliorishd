@@ -49,8 +49,8 @@ const placeVideo = (videoFile) => {
 
 const generateStatic = () => {
   const c = document.createElement('canvas'),
-    w = 360,
-    h = 288;
+    w = 311,
+    h = 299;
   c.width = w;
   c.height = h;
   const $ = c.getContext('2d');
@@ -66,8 +66,8 @@ const generateStatic = () => {
 
   const canvasTexture = PIXI.Texture.fromCanvas(c);
   const sprite = new PIXI.Sprite(canvasTexture);
-  sprite.width = 720;
-  sprite.height = 576;
+  sprite.width = 311;
+  sprite.height = 299;
   return sprite;
 };
 

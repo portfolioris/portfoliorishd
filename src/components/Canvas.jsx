@@ -48,19 +48,18 @@ class Canvas extends Component {
       };
 
       const tl_imageRoom1 = () => {
+        // wrap the image and static in a container
         const enterToViewTv = new PIXI.Container();
+        introSequence.addChild(enterToViewTv);
         enterToViewTv.alpha = 0;
         app.stage.addChild(enterToViewTv);
         const imageIntro1 = new PIXI.Sprite(resources.imageIntro1.texture);
         enterToViewTv.addChild(imageIntro1);
         const tvScreenMask = new PIXI.Sprite(resources.intro_1_screenmask.texture);
         enterToViewTv.addChild(tvScreenMask);
-        // imageIntro1.mask = tvScreenMask;
-        introSequence.addChild(enterToViewTv);
 
         const staticNoise = generateStatic(311, 299);
-        staticNoise.x = 576;
-        staticNoise.y = 1541;
+        staticNoise.position.set(576, 1541);
         enterToViewTv.addChild(staticNoise);
         staticNoise.mask = tvScreenMask;
 
@@ -72,22 +71,22 @@ class Canvas extends Component {
         moveAndLineTo(doorShape, doorShapePoints);
 
         return new TimelineMax()
-          .to(enterToViewTv, 0.01, { alpha: 1, x: -1920, y: 0 })
+          .to(enterToViewTv, 0.01, { pixi: { scale: 0.5, alpha: 1, x: -1520, y: 800 } })
           .to(flash, 0.5, { alpha: 0 })
-          .to(enterToViewTv, 2, { x: -1160, y: -200, ease: Power1.easeOut }, '-=0.5')
-          .to(doorShapePoints, 2, {
+          .to(enterToViewTv, 3, { pixi: { scale: 0.75, x: -360, y: 0, ease: Power1.easeOut } }, '-=0.5')
+          .to(doorShapePoints, 3, {
             ...[886, 1080, 515, 163, 960, 237, 1322, 1080, 886, 1080],
             onUpdate: moveAndLineTo,
             onUpdateParams: [doorShape, doorShapePoints],
-          }, "-=2")
-          .to(enterToViewTv, 3, { x: 0, y: -1080, ease: Power1.easeInOut })
+          }, "-=3")
+          .to(enterToViewTv, 3, { pixi: { scale: 1, x: 0, y: -1080 }, ease: Power1.easeInOut })
           .to(doorShapePoints, 3, {
             ...[125, 1080, -167, 270, 1632, -369, 2205, 1080],
             onUpdate: moveAndLineTo,
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-          // .to(enterToViewTv, 0, { alpha: 0 });
+        // .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
@@ -199,7 +198,7 @@ class Canvas extends Component {
 
       new TimelineMax()
       // .add(tl_message1())
-      .add(tl_imageRoom1())
+        .add(tl_imageRoom1())
       // .add(tl_message2())
       // .add(tl_video1())
       // .add(tl_message3())

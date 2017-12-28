@@ -18,6 +18,7 @@ import imageIntro1 from './../images/intro_1.jpg';
 import imageIntro2 from './../images/intro_2.jpg';
 import imageHiddenMe1 from './../images/hidden-me-1.jpg';
 import videoIntro1 from './../images/intro_seq_1.mp4';
+import videoIntro2 from './../images/intro_seq_2.mp4';
 
 import intro_1_screenmask from './../images/intro_1_screenmask.svg';
 
@@ -86,7 +87,7 @@ class Canvas extends Component {
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-        // .to(enterToViewTv, 0, { alpha: 0 });
+        .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
@@ -167,7 +168,7 @@ class Canvas extends Component {
       };
 
       const tl_title = () => {
-        const video2 = placeVideo(videoIntro1); // todo: 2
+        const video2 = placeVideo(videoIntro2);
         introSequence.addChild(video2.sprite);
         const titleGroup = new PIXI.Container();
         const title = textMessage('Portfolioris.nl', 128);
@@ -193,17 +194,17 @@ class Canvas extends Component {
             }
           })
           .to(flash, 0.8, { alpha: 0 })
-          .to(titleGroup, 4.8, { pixi: { scale: 0.8 }, ease: Linear.easeNone }, '-=2.8');
+          .to(titleGroup, 5, { pixi: { scale: 0.8 }, ease: Linear.easeNone }, '-=3.2');
       };
 
       new TimelineMax()
       // .add(tl_message1())
-        .add(tl_imageRoom1())
+      //   .add(tl_imageRoom1())
       // .add(tl_message2())
       // .add(tl_video1())
       // .add(tl_message3())
       //   .add(tl_image2())
-      //   .add(tl_title());
+        .add(tl_title());
     };
 
 
@@ -218,6 +219,7 @@ class Canvas extends Component {
       .add('imageIntro2', imageIntro2)
       .add('imageHiddenMe1', imageHiddenMe1)
       .add('videoIntro1', videoIntro1)
+      .add('videoIntro2', videoIntro2)
       .add('intro_1_screenmask', intro_1_screenmask)
       .load(onAssetsLoaded);
   }

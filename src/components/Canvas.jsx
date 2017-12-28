@@ -58,7 +58,7 @@ class Canvas extends Component {
         // imageIntro1.mask = tvScreenMask;
         introSequence.addChild(enterToViewTv);
 
-        const staticNoise = generateStatic();
+        const staticNoise = generateStatic(311, 299);
         staticNoise.x = 576;
         staticNoise.y = 1541;
         enterToViewTv.addChild(staticNoise);
@@ -87,7 +87,7 @@ class Canvas extends Component {
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-          .to(enterToViewTv, 0, { alpha: 0 });
+          // .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
@@ -232,11 +232,6 @@ class Canvas extends Component {
             this.canvas = canvas;
           }} className="c-canvas__canvas" width="1920" height="1080" />
         </div>
-        <svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
-          <path id="svg"
-                d="M786.713 1784.82c-68.872 37.9-105.69 61.948-132.924 53.484-7.186-2.233-14.75-6.292-27.27-32.133-8.155-28.058-42.838-104.594-48.353-124.4-3.55-12.748 1.725-29.134 6.144-32.75 22.8-18.666 194.906-113.156 228.24-107.8 33.336 5.354 82.837 151.435 73.236 169.76-9.6 18.323-30.2 35.938-99.073 73.84z" />
-        </svg>
-
       </div>
     );
   }

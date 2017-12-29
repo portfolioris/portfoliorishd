@@ -12,7 +12,6 @@ import {
   generateStatic,
 } from './helpers';
 
-/* global MorphSVGPlugin */
 import './Canvas.css';
 import imageIntro1 from './../images/intro_1.jpg';
 import imageIntro2 from './../images/intro_2.jpg';
@@ -21,6 +20,7 @@ import videoIntro1 from './../images/intro_seq_1.mp4';
 import videoIntro2 from './../images/intro_seq_2.mp4';
 
 import intro_1_screenmask from './../images/intro_1_screenmask.svg';
+import intro_2_screenmask from './../images/intro_2_screenmask.svg';
 
 class Canvas extends Component {
   componentDidMount() {
@@ -87,7 +87,7 @@ class Canvas extends Component {
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-        .to(enterToViewTv, 0, { alpha: 0 });
+          .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
@@ -136,9 +136,19 @@ class Canvas extends Component {
       };
 
       const tl_image2 = () => {
+        const wrapSprite = new PIXI.Container();
+        introSequence.addChild(wrapSprite);
+        wrapSprite.alpha = 0;
+        app.stage.addChild(wrapSprite);
         const imageIntro2 = new PIXI.Sprite(resources.imageIntro2.texture);
-        imageIntro2.alpha = 0;
-        introSequence.addChild(imageIntro2);
+        wrapSprite.addChild(imageIntro2);
+        const tvScreenMask = new PIXI.Sprite(resources.intro_2_screenmask.texture);
+        wrapSprite.addChild(tvScreenMask);
+
+        const staticNoise = generateStatic(874, 610);
+        staticNoise.position.set(1697, 0);
+        wrapSprite.addChild(staticNoise);
+        staticNoise.mask = tvScreenMask;
 
         const path = [
           { x: 162, y: 1080 },
@@ -158,13 +168,13 @@ class Canvas extends Component {
           { x: 1796, y: 822 },
           { x: 1523, y: 1080 },
         ];
-        imageIntro2.anchor.x = 0.5;
-        imageIntro2.anchor.y = 0.5;
+        wrapSprite.pivot.x = 1920;
+        wrapSprite.pivot.y = 1080;
         return new TimelineMax()
           .to(flash, 0.08, { alpha: 0, ease: Linear.easeNone })
-          .to(imageIntro2, 0, { alpha: 1 }, '-=0.07')
-          .to(imageIntro2, 5.5, { bezier: { values: path, type: 'cubic' }, ease: Linear.easeNone })
-          .to(imageIntro2, 0, { alpha: 0 });
+          .to(wrapSprite, 0, { alpha: 1 }, '-=0.07')
+          .to(wrapSprite, 5.5, { bezier: { values: path, type: 'cubic' }, ease: Linear.easeNone })
+          .to(wrapSprite, 0, { alpha: 0 });
       };
 
       const tl_title = () => {
@@ -198,12 +208,12 @@ class Canvas extends Component {
       };
 
       new TimelineMax()
-      // .add(tl_message1())
-      //   .add(tl_imageRoom1())
-      // .add(tl_message2())
-      // .add(tl_video1())
-      // .add(tl_message3())
-      //   .add(tl_image2())
+        .add(tl_message1())
+        .add(tl_imageRoom1())
+        .add(tl_message2())
+        .add(tl_video1())
+        .add(tl_message3())
+        .add(tl_image2())
         .add(tl_title());
     };
 
@@ -221,6 +231,7 @@ class Canvas extends Component {
       .add('videoIntro1', videoIntro1)
       .add('videoIntro2', videoIntro2)
       .add('intro_1_screenmask', intro_1_screenmask)
+      .add('intro_2_screenmask', intro_2_screenmask)
       .load(onAssetsLoaded);
   }
 

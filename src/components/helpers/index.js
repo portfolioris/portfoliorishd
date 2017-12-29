@@ -10,7 +10,7 @@ const textMessage = (text, size = 64) => {
     },
   );
 
-  message.anchor.set(0.5, 0,5);
+  message.anchor.set(0.5, 0, 5);
   message.position.set(1320, 540);
   message.alpha = 0;
   return message;
@@ -35,10 +35,15 @@ const placeFlash = () => {
 };
 
 const placeVideo = (videoFile) => {
+  const c = document.createElement('video');
+  c.src = videoFile;
+  c.preload = true;
   const videoTexture = PIXI.VideoBaseTexture.fromUrl(videoFile);
   videoTexture.autoPlay = false;
+  videoTexture.preLoad = true;
   const texture = new PIXI.Texture(videoTexture);
   const source = videoTexture.source;
+  source.preLoad = true;
   const sprite = new PIXI.Sprite(texture);
   sprite.alpha = 0;
   return {
@@ -63,9 +68,11 @@ const generateStatic = (width, height) => {
   const draw = () => {
     window.requestAnimationFrame(draw);
     let r;
+    const b = Math.random() * (0.8 - 0.2) + 0.2;
+
     for (let p = 4 * (w * h - 1); p >= 0; p -= 4) {
       r = Math.random();
-      id.data[p] = id.data[p + 1] = id.data[p + 2] = 255 * Math.pow(r, 0.5);
+      id.data[p] = id.data[p + 1] = id.data[p + 2] = 255 * Math.pow(r, b);
       id.data[p + 3] = 255;
     }
     $.putImageData(id, 0, 0);

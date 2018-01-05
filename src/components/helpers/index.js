@@ -40,10 +40,8 @@ const placeVideo = (videoFile) => {
   c.preload = true;
   const videoTexture = PIXI.VideoBaseTexture.fromUrl(videoFile);
   videoTexture.autoPlay = false;
-  videoTexture.preLoad = true;
   const texture = new PIXI.Texture(videoTexture);
   const source = videoTexture.source;
-  source.preLoad = true;
   const sprite = new PIXI.Sprite(texture);
   sprite.alpha = 0;
   return {
@@ -68,7 +66,7 @@ const generateStatic = (width, height) => {
   const draw = () => {
     window.requestAnimationFrame(draw);
     let r;
-    const b = Math.random() * (0.8 - 0.2) + 0.2;
+    const b = Math.random(); // * (0.8 - 0.2) + 0.2;
 
     for (let p = 4 * (w * h - 1); p >= 0; p -= 4) {
       r = Math.random();

@@ -87,7 +87,7 @@ class Canvas extends Component {
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-          .to(enterToViewTv, 0, { alpha: 0 });
+          // .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
@@ -210,11 +210,11 @@ class Canvas extends Component {
       new TimelineMax()
         .add(tl_message1())
         .add(tl_imageRoom1())
-        .add(tl_message2())
-        .add(tl_video1())
-        .add(tl_message3())
-        .add(tl_image2())
-        .add(tl_title());
+        // .add(tl_message2())
+        // .add(tl_video1())
+        // .add(tl_message3())
+        // .add(tl_image2())
+        // .add(tl_title());
     };
 
 

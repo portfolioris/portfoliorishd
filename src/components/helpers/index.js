@@ -77,7 +77,25 @@ const generateStatic = (width, height) => {
     sprite.texture.update();
   };
 
-  draw();
+  // draw();
+
+  const ticker = new PIXI.ticker.Ticker();
+  ticker.stop();
+  ticker.add((deltaTime) => {
+    // do something every frame
+    let r;
+    const b = Math.random(); // * (0.8 - 0.2) + 0.2;
+
+    for (let p = 4 * (w * h - 1); p >= 0; p -= 4) {
+      r = Math.random();
+      id.data[p] = id.data[p + 1] = id.data[p + 2] = 255 * Math.pow(r, b);
+      id.data[p + 3] = 255;
+    }
+    $.putImageData(id, 0, 0);
+    sprite.texture.update();
+  });
+  ticker.start();
+
   return sprite;
 };
 

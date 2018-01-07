@@ -13,14 +13,14 @@ import {
 } from './helpers';
 
 import './Canvas.css';
-import imageIntro1 from './../images/intro_1.jpg';
-import imageIntro2 from './../images/intro_2.jpg';
-import imageHiddenMe1 from './../images/hidden-me-1.jpg';
-import videoIntro1 from './../images/intro_seq_1.mp4';
-import videoIntro2 from './../images/intro_seq_2.mp4';
+import imageIntro1 from './../images/intro/intro_1.jpg';
+import imageIntro2 from './../images/intro/intro_2.jpg';
+import imageHiddenMe1 from './../images/intro/hidden-me-1.jpg';
+import videoIntro1 from './../images/intro/intro_seq_1.mp4';
+import videoIntro2 from './../images/intro/intro_seq_2.mp4';
 
-import intro_1_screenmask from './../images/intro_1_screenmask.svg';
-import intro_2_screenmask from './../images/intro_2_screenmask.svg';
+import intro_1_screenmask from './../images/intro/intro_1_screenmask.svg';
+import intro_2_screenmask from './../images/intro/intro_2_screenmask.svg';
 
 class Canvas extends Component {
   componentDidMount() {
@@ -87,7 +87,7 @@ class Canvas extends Component {
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-          // .to(enterToViewTv, 0, { alpha: 0 });
+        // .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
@@ -210,11 +210,11 @@ class Canvas extends Component {
       new TimelineMax()
         .add(tl_message1())
         .add(tl_imageRoom1())
-        // .add(tl_message2())
-        // .add(tl_video1())
-        // .add(tl_message3())
-        // .add(tl_image2())
-        // .add(tl_title());
+        .add(tl_message2())
+        .add(tl_video1())
+        .add(tl_message3())
+        .add(tl_image2())
+        .add(tl_title());
     };
 
 

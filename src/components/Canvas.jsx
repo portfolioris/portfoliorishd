@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TimelineMax, Linear, Power1 } from 'gsap';
 
 import * as PIXI from 'pixi.js';
+import { DisplayList } from 'pixi.js';
 import 'gsap/PixiPlugin';
 import 'pixi-display';
 import {
@@ -87,7 +88,7 @@ class Canvas extends Component {
             onUpdateParams: [doorShape, doorShapePoints],
             ease: Power1.easeInOut
           }, "-=3")
-        // .to(enterToViewTv, 0, { alpha: 0 });
+        .to(enterToViewTv, 0, { alpha: 0 });
       };
 
       const tl_message2 = () => {
